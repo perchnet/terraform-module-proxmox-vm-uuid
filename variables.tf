@@ -1,47 +1,61 @@
-variable "node" {
+variable "proxmox_host" {
+  description = "Proxmox server hostname or IP address"
   type        = string
-  description = "Proxmox node name"
 }
 
-variable "vmid" {
-  type        = string
-  description = "Proxmox VM ID"
+variable "proxmox_port" {
+  description = "Proxmox server port"
+  type        = number
+  default     = 8006
 }
 
-variable "host" {
-  type        = string
-  description = "Proxmox API host"
+variable "vm_id" {
+  description = "Virtual machine ID to retrieve UUID for"
+  type        = number
 }
 
-# The full api token, which may or may not include the "PVEAPIToken=" prefix.
-# If left empty will fall back to seperate token + secret
-variable "api_token" {
+variable "node_name" {
+  description = "Proxmox node name where the VM is located"
   type        = string
-  description = "Proxmox API Token"
+}
+
+variable "pve_api_token" {
+  description = "Proxmox API token (format: PVEAPIToken=user@realm!tokenid=secret)"
+  type        = string
+  default     = null
   sensitive   = true
-  default     = ""
 }
 
-variable "api_token_id" {
+variable "pve_api_token_id" {
+  description = "Proxmox API token ID (format: user@realm!tokenid)"
   type        = string
-  description = "Proxmox API Token ID"
-  default     = ""
+  default     = null
+  sensitive   = true
 }
 
-variable "api_token_secret" {
+variable "pve_api_token_secret" {
+  description = "Proxmox API token secret"
   type        = string
-  description = "Proxmox API Token Secret"
-  default     = ""
+  default     = null
+  sensitive   = true
 }
 
-variable "username" {
+variable "pve_username" {
+  description = "Proxmox username (format: user@realm)"
   type        = string
-  description = "Proxmox username (fallback)"
-  default     = ""
+  default     = null
+  sensitive   = true
 }
 
-variable "password" {
+variable "pve_password" {
+  description = "Proxmox password"
   type        = string
-  description = "Proxmox password (fallback)"
-  default     = ""
+  default     = null
+  sensitive   = true
+}
+
+variable "verify_ssl" {
+  description = "Whether to verify SSL certificates"
+  type        = bool
+  default     = true
 }
