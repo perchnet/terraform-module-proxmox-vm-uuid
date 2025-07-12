@@ -12,8 +12,9 @@ terraform {
 data "http" "auth_ticket" {
   count = local.auth_method == "username_password" ? 1 : 0
 
-  url    = "${local.proxmox_base_url}/access/ticket"
-  method = "POST"
+  url      = "${local.proxmox_base_url}/access/ticket"
+  method   = "POST"
+  insecure = !var.verify_ssl
 
   request_headers = {
     "Content-Type" = "application/x-www-form-urlencoded"
@@ -40,8 +41,9 @@ locals {
 data "http" "vm_status" {
   depends_on = [data.http.auth_ticket]
 
-  url    = local.vm_status_url
-  method = "GET"
+  url      = local.vm_status_url
+  method   = "GET"
+  insecure = !var.verify_ssl
 
   request_headers = merge(
     {
